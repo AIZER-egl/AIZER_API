@@ -9,13 +9,15 @@ passport.use(
         usernameField: 'email',
         passwordField: 'password',
     }, async (email, password, done) => {
+        email = email.toLowerCase();
         const user = await users.findOne({ email }) as User | null;
         if (!user) {
             return done (null, false, { message: 'Unknown user' });
         }
-        if (!bcrypt.compareSync(password, user.passwordHash)) {
+        if (!bcrypt.compareSync(password, user.passwordHash || '')) {
             return done(null, false, { message: 'Invalid password' });
         }
+        await users.updateOne({ email }, { lastLogin: new Date() });
         return done(null, user);
     })
 );
