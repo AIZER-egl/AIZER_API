@@ -4,9 +4,9 @@ dotenv.config();
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import Users from '../model/users';
+import { Users } from '../model/users';
+import { User } from '../../@types/user/users';
 import JwtPayload from '../../@types/jwtPayload';
-import User from '../../@types/users';
 
 export default function (req: Request, res: Response, next: NextFunction) {
     const token: string = req.header('Authorization') || '';

@@ -1,12 +1,7 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    passwordHash: {
+const groupSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
     },
@@ -14,23 +9,31 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    username: {
-        type: String,
-        required: true,
-    },
-    groups: {
+    members: {
         type: [String],
         required: true,
+        default: [],
     },
-    schoolInformation: {
-        type: Object,
+    membersRequests: {
+        type: [String],
+        required: true,
+        default: [],
+    },
+    items: {
+        type: Array,
+        default: [],
         required: true,
     },
-    role: {
+    campus: {
         type: String,
         required: true,
     },
-    lastLogin: {
+    logHistory: {
+        type: Array,
+        default: [],
+        required: true,
+    },
+    lastModified: {
         type: Date,
         required: true,
     },
@@ -40,5 +43,5 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-const Users = mongoose.model('User', userSchema);
-export { Users };
+const Groups = mongoose.model('groups', groupSchema);
+export { Groups };

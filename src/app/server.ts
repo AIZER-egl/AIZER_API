@@ -5,6 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
 import passport from './passport';
 import router from './controllers/router';
@@ -19,7 +20,13 @@ app.use(session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false, // TODO: In production, set this to true and add a proxy
+        maxAge: 1000 * 60 * 60,
+    }
 }));
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));

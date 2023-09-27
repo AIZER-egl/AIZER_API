@@ -1,8 +1,8 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import users from './model/users';
-import User from '../@types/users';
+import { Users } from './model/users';
+import { User } from '../@types/user/users';
 
 passport.use(
     new LocalStrategy({
@@ -10,14 +10,14 @@ passport.use(
         passwordField: 'password',
     }, async (email, password, done) => {
         email = email.toLowerCase();
-        const user = await users.findOne({ email }) as User | null;
+        const user = await Users.findOne({ email }) as User | null;
         if (!user) {
             return done (null, false, { message: 'Unknown user' });
         }
         if (!bcrypt.compareSync(password, user.passwordHash || '')) {
             return done(null, false, { message: 'Invalid password' });
         }
-        await users.updateOne({ email }, { lastLogin: new Date() });
+        await Users.updateOne({ email }, { lastLogin: new Date() });
         return done(null, user);
     })
 );
