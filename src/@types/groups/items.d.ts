@@ -7,3 +7,5 @@ interface Items {
     lastModified: Date;
     createdAt: Date;    
 }
+
+export { Items };

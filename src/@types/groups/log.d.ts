@@ -1,3 +1,5 @@
+import type { User } from '../user/users';
+
 interface Log {
     user: string,
     action: string,
@@ -5,4 +7,11 @@ interface Log {
     message: string,
 }
 
-export type { Log };
+interface FullLog {
+    user: User,
+    action: string,
+    timestamp: Date,
+    message: string,
+}
+
+export type { Log, FullLog };

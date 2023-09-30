@@ -12,12 +12,12 @@ app.listen(app.get('port'), async () => {
     await mongoose();
 
     process.stdout.write('Loading users... ');
-    const users = await Users.find() as User[];
+    const users = await Users.find().lean() as User[];
     users.forEach((user) => usersCache.ensure(user.uuid, user));
     process.stdout.write(`\rUsers have been loaded to cache! Cache size: ${usersCache.size}\n`);
 
     process.stdout.write('Loading groups... ');
-    const groups = await Groups.find() as Group[];
+    const groups = await Groups.find().lean() as Group[];
     groups.forEach((group) => groupsCache.ensure(group.uuid, group));
     process.stdout.write(`\rGroups have been loaded to cache! Cache size: ${groupsCache.size}\n`);
 });

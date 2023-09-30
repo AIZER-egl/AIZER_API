@@ -10,9 +10,8 @@ const router = Router();
 
 router.get('/', jwtAuthentication, async (req, res) => {
     const user = req.user as User;
-    delete user.passwordHash;
-
-    const groups = groupsCache.filter((g) => g.members.includes(user.uuid)).map((group) => group) as Group[];
+    user.passwordHash = '';
+    const groups = groupsCache.filter((g) => g.members.some((memberf) => memberf.user == user.uuid)).map((group) => group) as Group[];
     res.json({ user, groups });
 });
 
@@ -20,9 +19,9 @@ router.get('/', jwtAuthentication, async (req, res) => {
 router.get('/:uuid', jwtAuthentication, async (req, res) => {
     const userf = usersCache.get(req.params.uuid) || await Users.findOne({ uuid: req.params.uuid }) as User;
     if (!userf) return res.status(404).json({ message: 'User not found' });
-    delete userf.passwordHash;
+    userf.passwordHash = '';
 
-    const groups = groupsCache.filter((g) => g.members.includes(userf.uuid)).map((group) => group) as Group[];
+    const groups = groupsCache.filter((g) => g.members.some((memberf) => memberf.user == userf.uuid)).map((group) => group) as Group[];
     res.json({ user: userf, groups });
 });
 
