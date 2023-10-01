@@ -14,7 +14,7 @@ const router = Router();
 
 router.get('/verify', jwtAuthentication, (req, res) => {
     const user = req.user as User;
-    delete user.passwordHash;
+    user.passwordHash = '';
     res.json({ user });
 });
 
@@ -24,9 +24,15 @@ router.get('/failed', (req, res) => {
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/failed' }), (req, res) => {
     const user = req.user as User;
-    const token = jwt.sign({ email: user.email, uuid: user.uuid, passwordHash: user.passwordHash }, process.env.JWT_SECRET!, { expiresIn: '1h', algorithm: 'HS512' });
+    const token = jwt.sign({ email: user.email, uuid: user.uuid, passwordHash: user.passwordHash }, process.env.JWT_SECRET!, { expiresIn: '7d', algorithm: 'HS512' });
     usersCache.ensure(user.uuid, user);
-    res.json({ token });
+    res.cookie('token', 'Bearer ' + token, { httpOnly: true, secure: false, maxAge: 1000 * 60 * 60 * 24 * 7 });
+    res.json({ message: 'Cookie sent!' });
+});
+
+router.post('/logout', jwtAuthentication, (req, res) => {
+    res.cookie('token', '', { httpOnly: true, secure: false, expires: new Date(0) });
+    res.send({ message: 'Logged out' });
 });
 
 router.post('/logup', async (req, res) => {

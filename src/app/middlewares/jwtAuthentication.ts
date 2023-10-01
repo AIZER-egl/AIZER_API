@@ -9,8 +9,8 @@ import { User } from '../../@types/user/users';
 import JwtPayload from '../../@types/jwtPayload';
 
 export default function (req: Request, res: Response, next: NextFunction) {
-    const token: string = req.header('Authorization') || '';
-    
+    const token: string = req.cookies?.token;
+
     if (!token) return res.status(401).json({ message: 'No token provided' });
     if (!token.startsWith('Bearer')) return res.status(401).json({ message: 'Invalid token 1' });
 

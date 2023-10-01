@@ -13,7 +13,7 @@ import router from './controllers/router';
 const app = express();
 app.set('port', process.env.PORT);
 
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -23,10 +23,10 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: false, // TODO: In production, set this to true and add a proxy
-        maxAge: 1000 * 60 * 60,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
     }
 }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET!));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
