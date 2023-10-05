@@ -11,4 +11,5 @@ router.use('/', HomeController);
 router.use('/auth', AuthController);
 router.use('/users', UserController);
 router.use('/groups', GroupsController);
+
 export default router;

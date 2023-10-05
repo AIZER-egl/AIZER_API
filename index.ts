@@ -23,9 +23,9 @@ app.listen(app.get('port'), async () => {
 });
 
 process.stdin.on('data', (data) => {
-    if (data.toString() == 'rs') return;
+    if (data.toString() == 'rs\n') return;
     
-    if (data.toString() == 'exit') {
+    if (data.toString() == 'exit\n') {
         process.stdout.write('\nStopping server... ');
         process.exit(0);
     }

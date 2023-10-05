@@ -3,6 +3,7 @@ import type { Items } from './items';
 import type { User } from '../user/users';
 import type { Log } from './log';
 import type { FullMember, Member } from './member';
+import type { Shipments } from './shipments';
 
 interface Group {
     name: string;
@@ -10,6 +11,7 @@ interface Group {
     members: Member[];
     membersRequests: string[];
     items: Items[];
+    shipments: Shipments[];
     campus: Campus;
     logHistory: Log[];
     lastModified: Date;

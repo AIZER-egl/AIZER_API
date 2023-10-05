@@ -24,6 +24,11 @@ const groupSchema = new mongoose.Schema({
         default: [],
         required: true,
     },
+    shipments: {
+        type: Array,
+        default: [],
+        required: true,
+    },
     campus: {
         type: String,
         required: true,

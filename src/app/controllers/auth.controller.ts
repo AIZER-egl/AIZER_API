@@ -57,7 +57,7 @@ router.post('/logup', async (req, res) => {
         uuid,
         schoolInformation: {
             campus: user.schoolInformation.campus,
-            grade: user.schoolInformation.graduationYear,
+            graduationYear: user.schoolInformation.graduationYear,
         },
         groups: [],
         lastLogin: new Date(),
