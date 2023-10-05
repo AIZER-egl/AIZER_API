@@ -12,6 +12,8 @@ interface Shipments {
     delieveryStatus: 'pending' | 'shipped' | 'delievered' | 'cancelled' | 'returned';
     delieveryReference?: string;
     store: string;
+    createdAt: Date;
+    lastModified: Date;
 }
 
 interface FullShipmentQuantities {
@@ -23,8 +25,10 @@ interface FullShipments {
     items: FullShipmentQuantities[];
     delieveryFee: number;
     delieveryStatus: 'pending' | 'shipped' | 'delievered' | 'cancelled' | 'returned';
-    delieveryReference?: string;
+    delieveryReference?: string; // Clave de referencia (ej, numero de guía)
     store: string;
+    createdAt: Date;
+    lastModified: Date;
 }
 
 export { Shipments, FullShipmentQuantities, FullShipments, ShipmentQuantities };
