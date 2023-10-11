@@ -5,7 +5,8 @@ interface Items {
     description: string;
     amount: number;
     lastModified: Date;
-    createdAt: Date;    
+    createdAt: Date;
+    active: boolean;
 }
 
 export { Items };

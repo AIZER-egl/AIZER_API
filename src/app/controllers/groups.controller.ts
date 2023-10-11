@@ -44,7 +44,7 @@ router.get('/:uuid/full', jwtAuthentication, async (req, res) => {
         return usersCache.get(member) as User;
     });
     membersRequests.map((memberf) => memberf.passwordHash = '');
-
+    group.items = group.items.filter((item) => item.active);
     const logHistory: FullLog[] = group.logHistory.map((log) => {
         return { ...log, actionTo: usersCache.get(log.actionTo!) || null, user: usersCache.get(log.user) as User };
     });
